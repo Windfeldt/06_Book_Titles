@@ -1,4 +1,6 @@
-﻿namespace _06_Book_Titles
+﻿using System.Linq;
+
+namespace _06_Book_Titles
 {
     internal class Book
     {
@@ -12,9 +14,24 @@
 
             set
             {
-                
-                //_title = char.ToUpper(_title[0])+_title.Substring(1);
-                this._title = "Infernal";
+                string[] skiplist = { "the", "a", "an", "and", "over", "in", "of" };
+                string[] words = value.Split(' ');
+                string newtitle = "";
+                bool first = true;
+                foreach (string word in words)
+                {
+                    if (first || !skiplist.Contains(word))
+                    {
+                        newtitle += char.ToUpper(word[0]) + word.Substring(1) + " ";
+                    }
+                    else
+                    {
+                        newtitle += word + " ";
+                    }
+                    first = false;
+                }
+                newtitle = newtitle.Trim();
+                this._title = newtitle;
             }
         }
         
